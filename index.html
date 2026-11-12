@@ -75,6 +75,9 @@ table.hrs thead th{text-align:center;color:#E7EEF3;font-weight:700}
 table.hrs td{text-align:center;font:700 15px "Barlow",sans-serif;padding:5px 0;min-width:38px;border-radius:4px}
 table.hrs td.ar{padding:0}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.srcbanner{background:#12304A;color:#F4EDE1;border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:4px;font-size:14px}
+.srcbanner b{color:#7FD3C9;font:700 15px "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.srcbanner a{color:#F4EDE1;font-weight:700}
 .note{font-size:13.5px;background:#F1E8D8;border-radius:8px;padding:6px 10px}
 
 button{font:inherit;cursor:pointer}
@@ -103,6 +106,7 @@ form.edit .actions{display:flex;gap:8px;grid-column:1/-1}
     <p class="sub">Previsión por spot y día, y qué cometa saca cada uno. Esta versión se actualiza sola con la previsión de Open-Meteo cada vez que la abres (necesita internet).</p>
     <p class="sub" id="lastupd"></p>
   </header>
+  <div class="srcbanner" id="srcbanner" aria-live="polite"></div>
   <div id="livebar" hidden style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"></div>
 
   <div class="legend" aria-label="Leyenda de colores de viento">
@@ -161,10 +165,12 @@ function recommend(r, d){
   if(hasRanges(r)){
     // Official manufacturer ranges: smallest kite whose low end is at least 2 kn below the mean wind and whose top end holds the gusts
     const ks=parseKites(r.quiver);
-    const ok=ks.filter(k=>avg>=k.lo+2 && (!gust||gust<=k.hi));
-    if(ok.length){const k=ok[0];return {size:k.s,note:`rango ${k.lo}–${k.hi} kn`};}
-    if(avg<ks[ks.length-1].lo+2) return {warn:`Poco viento: ni la ${ks[ks.length-1].s} m`};
-    return {warn:`Mucho viento: ni la ${ks[0].s} m`};
+    const ok=ks.filter(k=>avg>=k.lo+2);
+    if(!ok.length) return {warn:`Poco viento: ni la ${ks[ks.length-1].s} m`};
+    const safe=ok.filter(k=>!gust||gust<=k.hi);
+    if(safe.length){const k=safe[0];return {size:k.s,note:`rango ${k.lo}–${k.hi} kn`};}
+    if(avg>ok[0].hi) return {warn:`Mucho viento: ni la ${ok[0].s} m`};
+    const k=ok[0]; return {size:k.s,note:`ojo rachas ${gust} > ${k.hi} kn`};
   }
   if(!w) return {warn:"Falta el peso"};
   let ideal=w*2.2/avg; if(gust && gust/avg>1.35) ideal*=0.9;
@@ -358,7 +364,25 @@ function renderPack(){
     el.appendChild(card);
   });
 }
-function render(){renderRiders();renderPack();renderDays();}
+function renderBanner(){
+  const el=$("#srcbanner"); if(!el) return;
+  const live=!!(window.SNAP&&window.SNAP.live);
+  const WG_URL="https://claude.ai/artifact/WSafHxbWiegaFazQDgjpeR", OM_URL="https://raulvillalbavandijk.github.io/kite-brasil-2026/";
+  let src, when="";
+  if(live){
+    const name=(LIVE_MODELS.find(m=>m[0]===liveModel)||[0,liveModel])[1];
+    src=`Open-Meteo · ${liveModel==="best_match"?"mejor modelo disponible":"modelo "+esc(name)} · punto a ~3 km mar adentro de cada spot`;
+    if(FC&&FC.actualizado) when=`Cargada a las ${new Date(FC.actualizado).toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})} (se recarga al abrir la página).`;
+  } else {
+    src="Windguru Pro · blend de modelos WG del spot de Windguru";
+    if(FC&&FC.actualizado) when=`Actualizada el ${esc(fmtDate(Date.parse(FC.actualizado)||FC.actualizado))}.`;
+  }
+  el.innerHTML=`<b>Referencia de viento</b>
+    <span>Fuente: ${src}. ${when}</span>
+    <span>El número grande de cada día es el <strong>viento medio de 9 a 17 h</strong> (nudos, a 10 m); las rachas, la máxima de ese tramo. Hora local de Brasil.</span>
+    <span>${live?`Versión con Windguru Pro (la referencia principal): <a href="${WG_URL}">abrir</a>`:`Versión que se actualiza sola con Open-Meteo (plan B, sin ordenador): <a href="${OM_URL}">abrir</a>`}</span>`;
+}
+function render(){renderBanner();renderRiders();renderPack();renderDays();}
 function showErr(e){
   statusEl.hidden=false;
   if(e&&e.code==="invalid_argument"){canWrite=false;editing=null;editingRider=null;statusEl.textContent="Puedes ver la previsión, pero no tienes permiso para cambiarla.";render();return}
