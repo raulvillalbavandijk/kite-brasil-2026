@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Viento y cometas · en directo (Open-Meteo)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Barlow:wght@400;600;700&family=Barlow+Condensed:wght@600;700&display=swap">
+<style>
+:root{
+  --sand:#F4EDE1; --card:#FBF7F0; --ink:#12304A; --muted:#5A6B78; --line:#E2D7C5;
+  --teal:#0E6E6D; --coral:#E4572E; --blue:#1D4ED8;
+  --w0:#9AA6B0; --w1:#2F9E8F; --w2:#1D6FD8; --w3:#E08A1E; --w4:#D2402A;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--sand);color:var(--ink);font:15px/1.45 "Barlow",system-ui,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 18px 60px;display:flex;flex-direction:column;gap:22px}
+.eyebrow{font:700 13px "Barlow Condensed",sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--teal)}
+h1{margin:4px 0 0;font:900 clamp(40px,8vw,72px)/.9 "Big Shoulders Display",Impact,sans-serif;text-transform:uppercase}
+h1 span{color:var(--coral)}
+.sub{color:var(--muted);margin-top:8px;max-width:70ch}
+h2{margin:0;font:700 22px "Barlow Condensed",sans-serif;letter-spacing:.06em;text-transform:uppercase}
+.status{border:1px dashed var(--line);border-radius:10px;padding:12px 14px;color:var(--muted);background:var(--card)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+
+/* riders */
+.riders{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.rider{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.rider .name{font:700 20px "Barlow Condensed",sans-serif}
+.rider .meta{font-size:13px;color:var(--muted)}
+.rider .missing{color:var(--coral);font-weight:600}
+
+/* days */
+.days{display:flex;flex-direction:column;gap:12px}
+.day{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:grid;grid-template-columns:150px 1fr;}
+.day .side{background:var(--ink);color:#F4EDE1;padding:14px;display:flex;flex-direction:column;gap:4px}
+.day .side .dnum{font:900 46px/1 "Big Shoulders Display",sans-serif}
+.day .side .dname{font:700 16px "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#7FD3C9}
+.day .side .when{font-size:13px;opacity:.85}
+.day .main{padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.day .top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;align-items:flex-start}
+.day .spot{font:700 21px "Barlow Condensed",sans-serif}
+.day .plan{color:var(--muted);font-size:14px}
+.wind{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.windbadge{border-radius:10px;color:#fff;padding:8px 12px;display:flex;align-items:baseline;gap:8px;min-width:150px}
+.windbadge b{font:900 34px/1 "Big Shoulders Display",sans-serif}
+.windbadge small{font-weight:600;font-size:13px;opacity:.95}
+.windbadge.none{background:transparent;color:var(--muted);border:2px dashed var(--line)}
+.windbadge.none b{font:700 16px "Barlow",sans-serif}
+.arrow{width:30px;height:30px;flex:none}
+.src{font-size:12.5px;color:var(--muted)}
+.kites{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.kite{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.kite .who{font-weight:700}
+.kite .size{font:900 26px/1 "Big Shoulders Display",sans-serif;color:var(--teal)}
+.kite .size.warn{color:var(--coral);font:700 13px "Barlow",sans-serif;text-align:right;max-width:110px}
+.kite .ideal{display:block;font-size:11.5px;color:var(--muted);font-weight:600}
+.av{flex:none;display:inline-block;vertical-align:middle}
+.rname{display:flex;align-items:center;gap:8px}
+.kite .who{display:flex;align-items:center;gap:6px}
+.pack{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.packcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border-radius:999px;padding:4px 10px;font-weight:700;font-size:13px;border:1.5px solid currentColor}
+.chip.off{color:#9AA6B0;border-style:dashed;font-weight:600}
+.chip.warn{color:var(--coral)}
+.hint{font-size:12.5px;color:var(--muted)}
+.strips{display:flex;flex-direction:column;gap:8px}
+.strip{background:#12304A;border-radius:10px;padding:8px 10px;color:#E7EEF3;overflow-x:auto}
+.strip .sname{font:700 14px "Barlow Condensed",sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#7FD3C9;margin-bottom:4px}
+table.hrs{border-collapse:separate;border-spacing:2px;font-variant-numeric:tabular-nums;min-width:100%}
+table.hrs th{font:600 12px "Barlow",sans-serif;color:#A9BBC8;text-align:left;padding:2px 6px 2px 0;white-space:nowrap}
+table.hrs thead th{text-align:center;color:#E7EEF3;font-weight:700}
+table.hrs td{text-align:center;font:700 15px "Barlow",sans-serif;padding:5px 0;min-width:38px;border-radius:4px}
+table.hrs td.ar{padding:0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.note{font-size:13.5px;background:#F1E8D8;border-radius:8px;padding:6px 10px}
+
+button{font:inherit;cursor:pointer}
+.btn{border:1px solid var(--ink);background:transparent;color:var(--ink);border-radius:999px;padding:5px 12px;font-weight:600;font-size:13px;min-height:34px}
+.btn.primary{background:var(--ink);color:#fff}
+.btn:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--coral);outline-offset:2px}
+form.edit{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;align-items:end;border-top:1px dashed var(--line);padding-top:10px}
+form.edit label{display:flex;flex-direction:column;gap:3px;font-size:12.5px;font-weight:600;color:var(--muted)}
+form.edit input,form.edit select{font:inherit;font-size:15px;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:7px 9px;background:#fff;min-width:0}
+form.edit .wide{grid-column:1/-1}
+form.edit .actions{display:flex;gap:8px;grid-column:1/-1}
+.how{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:14px;color:var(--muted)}
+.how b{color:var(--ink)}
+@media (max-width:620px){
+  .day{grid-template-columns:1fr}
+  .day .side{flex-direction:row;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .day .side .dnum{font-size:34px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Kitesurfari Brasil · 15–22 nov 2026</div>
+    <h1>Viento <span>y cometas</span></h1>
+    <p class="sub">Previsión por spot y día, y qué cometa saca cada uno. Esta versión se actualiza sola con la previsión de Open-Meteo cada vez que la abres (necesita internet).</p>
+    <p class="sub" id="lastupd"></p>
+  </header>
+  <div id="livebar" hidden style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"></div>
+
+  <div class="legend" aria-label="Leyenda de colores de viento">
+    <span><i style="background:var(--w0)"></i>Flojo (&lt;12 kn)</span>
+    <span><i style="background:var(--w1)"></i>12–16 kn</span>
+    <span><i style="background:var(--w2)"></i>16–22 kn</span>
+    <span><i style="background:var(--w3)"></i>22–28 kn</span>
+    <span><i style="background:var(--w4)"></i>+28 kn</span>
+  </div>
+
+  <div id="status" class="status">Cargando la previsión…</div>
+
+  <section aria-labelledby="h-riders" style="display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+      <h2 id="h-riders">Riders y quiver</h2>
+    </div>
+    <div class="riders" id="riders"></div>
+  </section>
+
+  <section aria-labelledby="h-pack" style="display:flex;flex-direction:column;gap:10px">
+    <h2 id="h-pack">Qué cometas meter en el boardbag</h2>
+    <p class="hint" style="margin:0">Días que sale cada cometa con la previsión actual. Las que no salen ningún día van en gris.</p>
+    <div class="pack" id="pack"></div>
+  </section>
+
+  <section aria-labelledby="h-days" style="display:flex;flex-direction:column;gap:10px">
+    <h2 id="h-days">Día a día</h2>
+    <div class="days" id="days"></div>
+  </section>
+
+  <div class="how"><span id="attr"></span>
+    <b>Cómo se calcula.</b> Tamaño ideal ≈ peso (kg) × 2,2 ÷ viento medio (kn). Si las rachas superan en más de un 35 % al viento medio, se baja un 10 %. Luego se elige la cometa del quiver de cada uno más cercana a ese ideal. <b>Si un rider pone el rango oficial de cada cometa</b> (por ejemplo 12:10-27), se usa ese rango en lugar de la fórmula: sale la cometa más pequeña cuyo mínimo quede al menos 2 kn por debajo del viento medio y cuyo máximo aguante las rachas. <b>Gráficos por horas:</b> vienen de Windguru (blend WG) y los actualiza Claude; si alguien mete a mano una previsión más reciente, manda la suya. Es una regla orientativa para twin-tip: con el viento real en la playa, manda la sensación y lo que diga Iván.
+  </div>
+</div>
+
+<script>window.SNAP={"generado": "12 nov 2026", "riders": [{"id": "raul", "nombre": "Raúl", "orden": 1, "peso": 80, "quiver": "7:19-37, 9:14-31, 10:13-31, 12:10-27", "modelos": "Evo 7 · Neo SLS 9 · Evo 10 · Evo SLS 12"}, {"id": "paco", "nombre": "Paco", "orden": 2, "peso": 85, "quiver": "8, 10, 12"}, {"id": "nacho", "nombre": "Nacho", "orden": 3, "peso": 91, "quiver": "9, 12"}, {"id": "jorge", "nombre": "Jorge", "orden": 4, "peso": 73, "quiver": "7, 9, 10, 12"}], "dias": [{"id": "d15", "orden": 15, "fecha": "15", "dia_semana": "Dom", "franja": "Llegada 17:00", "spot": "Cumbuco", "plan": "Llegada a Fortaleza y traslado. Sin sesión.", "viento": null, "nota": ""}, {"id": "d16", "orden": 16, "fecha": "16", "dia_semana": "Lun", "franja": "09–17 h", "spot": "Barrinha → Preá → Jericoacoara", "plan": "Downwind Barrinha → duna de Jeri (~18 km)", "nota": "El día más flojo de la semana según la previsión de hoy.", "actualizado": 1794483600000}, {"id": "d17", "orden": 17, "fecha": "17", "dia_semana": "Mar", "franja": "09–17 h", "spot": "Jeri → Guriú → Tatajuba", "plan": "Downwind ~22 km", "nota": "Mareas muertas: la laguna de Tatajuba puede ir baja.", "actualizado": 1794483600000}, {"id": "d18", "orden": 18, "fecha": "18", "dia_semana": "Mié", "franja": "09–17 h", "spot": "Tatajuba → Camocim → Maceió", "plan": "Downwind ~29 km + sunset en Camocim", "nota": "Sube por la tarde.", "actualizado": 1794483600000}, {"id": "d19", "orden": 19, "fecha": "19", "dia_semana": "Jue", "franja": "09–17 h", "spot": "Maceió → Barra dos Remédios → Bitupitá", "plan": "Downwind ~35 km + coche a Barra Grande", "nota": "Sin spot de Windguru en Maceió ni Bitupitá: se usan Camocim y Barra Grande.", "actualizado": 1794483600000}, {"id": "d20", "orden": 20, "fecha": "20", "dia_semana": "Vie", "franja": "09–17 h", "spot": "Macapá (desde Barra Grande)", "plan": "Downwind corto a la laguna de Macapá, temprano. Opcional: barco al Delta del Parnaíba", "nota": "", "actualizado": 1794483600000}, {"id": "d21", "orden": 21, "fecha": "21", "dia_semana": "Sáb", "franja": "Tarde (12–18 h)", "spot": "Taíba", "plan": "Traslado largo y sesión de tarde", "nota": "Datos del spot de la laguna; en el mar suele soplar algo más.", "actualizado": 1794483600000}, {"id": "d22", "orden": 22, "fecha": "22", "dia_semana": "Dom", "franja": "Mañana (6–12 h)", "spot": "Taíba", "plan": "Última sesión y al aeropuerto", "nota": "Datos del spot de la laguna.", "actualizado": 1794483600000}], "live": {"start": "2026-11-15", "end": "2026-11-22", "spots": {"prea": {"name": "Praia do Preá", "lat": -2.785, "lon": -40.41}, "jeri": {"name": "Jericoacoara", "lat": -2.765, "lon": -40.515}, "tatajuba": {"name": "Tatajuba", "lat": -2.8, "lon": -40.69}, "camocim": {"name": "Camocim", "lat": -2.855, "lon": -40.84}, "barragrande": {"name": "Barra Grande", "lat": -2.88, "lon": -41.41}, "taiba": {"name": "Taíba", "lat": -3.505, "lon": -38.87}}, "plan": {"16": ["prea", "jeri"], "17": ["jeri", "tatajuba"], "18": ["tatajuba", "camocim"], "19": ["camocim", "barragrande"], "20": ["barragrande"], "21": ["taiba"], "22": ["taiba"]}}};</script>
+<script>
+const $=s=>document.querySelector(s);
+const statusEl=$("#status"), daysEl=$("#days"), ridersEl=$("#riders");
+let days=[], riders=[], canWrite=true, db=null, editing=null, editingRider=null;
+
+function windColor(k){ if(k==null||k==="") return null; k=+k;
+  return k<12?"var(--w0)":k<16?"var(--w1)":k<22?"var(--w2)":k<28?"var(--w3)":"var(--w4)"; }
+// Quiver: "7, 9, 12" or with official ranges "7:19-37, 9:14-31, 12:10-27"
+function parseKites(q){
+  return String(q||"").split(/[,;]+/).map(t=>t.trim()).filter(Boolean).map(t=>{
+    const m=t.match(/^(\d+(?:\.\d+)?)\s*(?:m)?\s*(?::\s*(\d+)\s*[-–]\s*(\d+))?/i);
+    return m?{s:+m[1],lo:m[2]!=null?+m[2]:null,hi:m[3]!=null?+m[3]:null}:null;
+  }).filter(k=>k&&k.s>0).sort((a,b)=>a.s-b.s);
+}
+function parseQuiver(q){ return parseKites(q).map(k=>k.s); }
+function hasRanges(r){ const k=parseKites(r.quiver); return k.length>0 && k.every(x=>x.lo!=null); }
+function recommend(r, d){
+  const w=+r.peso, avg=+d.viento, gust=+d.racha||0;
+  if(!avg) return null;
+  if(hasRanges(r)){
+    // Official manufacturer ranges: smallest kite whose low end is at least 2 kn below the mean wind and whose top end holds the gusts
+    const ks=parseKites(r.quiver);
+    const ok=ks.filter(k=>avg>=k.lo+2 && (!gust||gust<=k.hi));
+    if(ok.length){const k=ok[0];return {size:k.s,note:`rango ${k.lo}–${k.hi} kn`};}
+    if(avg<ks[ks.length-1].lo+2) return {warn:`Poco viento: ni la ${ks[ks.length-1].s} m`};
+    return {warn:`Mucho viento: ni la ${ks[0].s} m`};
+  }
+  if(!w) return {warn:"Falta el peso"};
+  let ideal=w*2.2/avg; if(gust && gust/avg>1.35) ideal*=0.9;
+  const q=parseQuiver(r.quiver);
+  if(!q.length) return {ideal, warn:"Falta el quiver"};
+  if(ideal < q[0]-1.5) return {ideal, warn:`Mucho viento: ni la ${q[0]} m`};
+  if(ideal > q[q.length-1]+2) return {ideal, warn:`Poco viento: ni la ${q[q.length-1]} m`};
+  let best=q[0]; for(const s of q) if(Math.abs(s-ideal)<Math.abs(best-ideal)) best=s;
+  return {ideal, size:best};
+}
+const DIRS=["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSO","SO","OSO","O","ONO","NO","NNO"];
+function dirArrow(deg){
+  if(deg==null||deg==="") return "";
+  // arrow points where the wind blows TO
+  const rot=(+deg+180)%360;
+  return `<svg class="arrow" viewBox="0 0 30 30" role="img" aria-label="Viento del ${DIRS[Math.round(+deg/22.5)%16]}"><circle cx="15" cy="15" r="14" fill="#fff" stroke="#E2D7C5"/><g transform="rotate(${rot} 15 15)"><path d="M15 5 L20 17 L15 14 L10 17 Z" fill="#12304A"/><line x1="15" y1="14" x2="15" y2="24" stroke="#12304A" stroke-width="2.4" stroke-linecap="round"/></g></svg>`;
+}
+const RC={raul:"#0E6E6D",paco:"#E4572E",nacho:"#1D4ED8",jorge:"#6D3FA0"};
+const FALLBACK=["#0E6E6D","#E4572E","#1D4ED8","#6D3FA0","#B07A12","#2F8F3A"];
+function rcolor(r){return RC[r.id]||FALLBACK[((r.orden||1)-1)%FALLBACK.length];}
+function avatar(r,size=34){
+  const c=rcolor(r), ini=esc(String(r.nombre||"?").trim().charAt(0).toUpperCase());
+  return `<svg class="av" width="${size}" height="${size}" viewBox="0 0 34 34" aria-hidden="true"><path d="M17 2 L31 13 L17 30 L3 13 Z" fill="${c}"/><path d="M17 2 L17 30 M3 13 L31 13" stroke="#fff" stroke-opacity=".35" stroke-width="1"/><text x="17" y="19.5" text-anchor="middle" font-family="Barlow Condensed, Arial, sans-serif" font-weight="700" font-size="13" fill="#fff">${ini}</text></svg>`;
+}
+// ---- Hourly forecast file (written by Claude from Windguru) ----
+let FC=null;
+function kc(k){ return k<8?"#5B8FD6":k<11?"#4DB6C9":k<14?"#4CC38A":k<17?"#9BD34A":k<20?"#E8D23A":k<24?"#F0A33A":k<28?"#E8613A":"#C23A6B"; }
+function kt(k){ return k>=24?"#fff":"#12304A"; }
+function arrowSmall(deg){ if(deg==null) return ""; const rot=(+deg+180)%360;
+  return `<svg width="22" height="22" viewBox="0 0 22 22" role="img" aria-label="Viento del ${DIRS[Math.round(+deg/22.5)%16]}"><g transform="rotate(${rot} 11 11)"><path d="M11 3 L15 12 L11 10 L7 12 Z" fill="#E7EEF3"/><line x1="11" y1="10" x2="11" y2="19" stroke="#E7EEF3" stroke-width="2" stroke-linecap="round"/></g></svg>`; }
+function fcSummary(day){
+  const sp=FC&&FC.dias&&FC.dias[day]; if(!sp||!sp.length) return null;
+  const hs=sp.flatMap(s=>s.horas.filter(h=>h[0]>=9&&h[0]<=17));
+  if(!hs.length) return null;
+  const v=hs.map(h=>h[1]), g=hs.map(h=>h[2]);
+  let sx=0,sy=0; hs.forEach(h=>{const r=h[3]*Math.PI/180; sx+=Math.sin(r); sy+=Math.cos(r);});
+  const dir=(Math.atan2(sx,sy)*180/Math.PI+360)%360;
+  return {mean:Math.round(v.reduce((a,b)=>a+b,0)/v.length), min:Math.min(...v), max:Math.max(...v), gust:Math.max(...g), dir, spots:sp.map(s=>s.spot).join(" y ")};
+}
+function eff(d){
+  const s=fcSummary(String(d.fecha)); if(!s) return d;
+  const jt=Date.parse(FC.actualizado);
+  if(d.actualizado && d.actualizado>jt) return d; // a manual update newer than the file wins
+  return {...d, viento:s.mean, rango:`${s.min}–${s.max}`, racha:s.gust, dir:s.dir, fuente:`${FC.fuente} · ${s.spots}`, actualizado:jt};
+}
+function strips(day){
+  const sp=FC&&FC.dias&&FC.dias[day]; if(!sp) return "";
+  return `<div class="strips">${sp.map(s=>`<div class="strip"><div class="sname">${esc(s.spot)}</div>
+    <table class="hrs"><thead><tr><th scope="col"><span class="sr">Hora</span></th>${s.horas.map(h=>`<th scope="col">${h[0]}h</th>`).join("")}</tr></thead><tbody>
+    <tr><th scope="row">Dir.</th>${s.horas.map(h=>`<td class="ar">${arrowSmall(h[3])}</td>`).join("")}</tr>
+    <tr><th scope="row">kn</th>${s.horas.map(h=>`<td style="background:${kc(h[1])};color:${kt(h[1])}">${h[1]}</td>`).join("")}</tr>
+    <tr><th scope="row">Rachas</th>${s.horas.map(h=>`<td style="background:${kc(h[2])};color:${kt(h[2])}">${h[2]}</td>`).join("")}</tr>
+    </tbody></table></div>`).join("")}</div>`;
+}
+
+// ---- Live mode (standalone file): fetch Open-Meteo on open ----
+const LIVE_MODELS=[["best_match","Mejor modelo"],["gfs_seamless","GFS"],["ecmwf_ifs025","ECMWF"],["icon_seamless","ICON"]];
+let liveModel="best_match";
+try{ liveModel=localStorage.getItem("om_model")||"best_match"; }catch(e){}
+async function loadLive(){
+  const L=window.SNAP.live; const ids=Object.keys(L.spots);
+  const lat=ids.map(k=>L.spots[k].lat).join(","), lon=ids.map(k=>L.spots[k].lon).join(",");
+  const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=wind_speed_10m,wind_gusts_10m,wind_direction_10m&models=${liveModel}&wind_speed_unit=kn&timezone=America%2FFortaleza&start_date=${L.start}&end_date=${L.end}`;
+  statusEl.hidden=false; statusEl.textContent="Cargando la previsión en directo de Open-Meteo…";
+  try{
+    const r=await fetch(url); if(!r.ok) throw new Error(r.status);
+    let j=await r.json(); if(!Array.isArray(j)) j=[j];
+    const bySpot={};
+    ids.forEach((k,i)=>{const H=j[i].hourly, sfx=Object.keys(H).find(x=>x.startsWith("wind_speed_10m"))||"wind_speed_10m";
+      const key=sfx.replace("wind_speed_10m",""); const sp=H["wind_speed_10m"+key], gu=H["wind_gusts_10m"+key], di=H["wind_direction_10m"+key];
+      const per={}; H.time.forEach((t,ti)=>{const day=String(+t.slice(8,10)), h=+t.slice(11,13);
+        if(h<6||h>18||h%2) return; if(sp[ti]==null) return;
+        (per[day]=per[day]||[]).push([h,Math.round(sp[ti]),Math.round(gu[ti]),Math.round(di[ti])]);});
+      bySpot[k]=per;});
+    const dias={}; Object.entries(L.plan).forEach(([d,sps])=>{dias[d]=sps.filter(k=>bySpot[k]&&bySpot[k][d]).map(k=>({spot:L.spots[k].name,horas:bySpot[k][d]}));});
+    const name=(LIVE_MODELS.find(m=>m[0]===liveModel)||[0,liveModel])[1];
+    FC={actualizado:Date.now(), fuente:`Open-Meteo · ${name}`, dias};
+    statusEl.textContent=`Previsión en directo de Open-Meteo (${name}), cargada a las ${new Date().toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})}. Se actualiza cada vez que abres la página.`;
+  }catch(e){
+    statusEl.textContent="No se ha podido cargar la previsión en directo (¿sin conexión?). Vuelve a abrir la página con internet.";
+  }
+  render();
+}
+function setupLive(){
+  const bar=$("#livebar"); bar.hidden=false;
+  bar.innerHTML=`<span class="hint" style="font-weight:600">Modelo:</span>`+LIVE_MODELS.map(([id,n])=>`<button type="button" class="btn${id===liveModel?" primary":""}" data-m="${id}" aria-pressed="${id===liveModel}">${n}</button>`).join("");
+  bar.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{liveModel=b.dataset.m; try{localStorage.setItem("om_model",liveModel)}catch(e){}; setupLive(); loadLive();}));
+  $("#attr").innerHTML=`<b>Datos:</b> previsión de <a href="https://open-meteo.com/" style="color:inherit">Open-Meteo.com</a> (CC BY 4.0), puntos situados ~3 km mar adentro de cada spot. `;
+}
+
+if(window.SNAP&&window.SNAP.fc){FC=window.SNAP.fc;}
+else fetch("forecast.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{if(j){FC=j;render();}}).catch(()=>{});
+function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function fmtDate(ts){ if(!ts) return ""; const d=new Date(ts); return d.toLocaleString("es-ES",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}); }
+
+function renderRiders(){
+  ridersEl.textContent="";
+  riders.slice().sort((a,b)=>(a.orden||0)-(b.orden||0)).forEach(r=>{
+    const el=document.createElement("div"); el.className="rider";
+    if(editingRider===r.id){
+      el.innerHTML=`<div class="name rname">${avatar(r)}${esc(r.nombre)}</div>
+      <form class="edit" style="border:0;padding:0">
+        <label>Peso (kg)<input type="number" name="peso" min="30" max="150" value="${esc(r.peso??"")}"></label>
+        <label class="wide">Cometas (m², separadas por comas; opcional rango oficial: 12:10-27)<input type="text" name="quiver" value="${esc(r.quiver??"")}" placeholder="7, 9, 12"></label>
+        <label class="wide">Modelos (opcional)<input type="text" name="modelos" value="${esc(r.modelos??"")}" placeholder="Evo 7 · Neo SLS 9 · Evo SLS 12"></label>
+        <div class="actions"><button class="btn primary" type="submit">Guardar</button><button class="btn" type="button" data-cancel>Cancelar</button></div>
+      </form>`;
+      const f=el.querySelector("form");
+      f.addEventListener("submit",async e=>{e.preventDefault();
+        const peso=f.peso.value?+f.peso.value:null, quiver=f.quiver.value.trim(), modelos=f.modelos.value.trim();
+        try{await db.doc("riders/"+r.id).update({peso,quiver,modelos}); editingRider=null; render();}catch(err){showErr(err)}});
+      el.querySelector("[data-cancel]").addEventListener("click",()=>{editingRider=null;render();});
+    } else {
+      const ks=parseKites(r.quiver), rng=hasRanges(r);
+      el.innerHTML=`<div class="name rname">${avatar(r)}${esc(r.nombre)}</div>
+        <div class="meta">${r.peso?`${esc(r.peso)} kg`:'<span class="missing">Falta el peso</span>'} · ${ks.length?ks.map(k=>k.s+" m"+(k.lo!=null?` (${k.lo}–${k.hi})`:"")).join(" · "):'<span class="missing">Falta el quiver</span>'}</div>
+        ${r.modelos?`<div class="meta">${esc(r.modelos)}</div>`:""}
+        <div class="meta">${rng?"Cálculo: rangos oficiales del fabricante":"Cálculo: fórmula por peso"}</div>`;
+      if(canWrite){const b=document.createElement("button");b.className="btn";b.type="button";b.textContent="Editar";b.style.alignSelf="flex-start";
+        b.addEventListener("click",()=>{editingRider=r.id;render();});el.appendChild(b);}
+    }
+    ridersEl.appendChild(el);
+  });
+}
+
+function renderDays(){
+  daysEl.textContent="";
+  days.slice().sort((a,b)=>(a.orden||0)-(b.orden||0)).forEach(d=>{
+    const el=document.createElement("article"); el.className="day";
+    const e=eff(d);
+    const col=windColor(e.viento);
+    const badge = col
+      ? `<div class="windbadge" style="background:${col}"><b>${esc(e.viento)}</b><small>kn${e.rango?` (${esc(e.rango)})`:""}${e.racha?` · rachas ${esc(e.racha)}`:""}</small></div>`
+      : `<div class="windbadge none"><b>Sin previsión aún</b></div>`;
+    const ridersSorted=riders.slice().sort((a,b)=>(a.orden||0)-(b.orden||0));
+    const kites = col ? ridersSorted.map(r=>{
+      const rec=recommend(r,e); if(!rec) return "";
+      const val = rec.size!=null ? `<span class="size">${rec.size} m<span class="ideal">${rec.note?esc(rec.note):`ideal ${rec.ideal.toFixed(1)}`}</span></span>` : `<span class="size warn">${esc(rec.warn)}</span>`;
+      return `<div class="kite"><span class="who">${avatar(r,24)}${esc(r.nombre)}</span>${val}</div>`;
+    }).join("") : "";
+    el.innerHTML=`
+      <div class="side"><div class="dname">${esc(d.dia_semana||"")}</div><div class="dnum">${esc(d.fecha||"")}</div><div class="when">${esc(d.franja||"")}</div></div>
+      <div class="main">
+        <div class="top"><div><div class="spot">${esc(d.spot||"")}</div><div class="plan">${esc(d.plan||"")}</div></div>
+          <div class="wind">${badge}${dirArrow(e.dir)}</div></div>
+        ${kites?`<div class="kites">${kites}</div>`:""}
+        ${strips(String(d.fecha))}
+        ${d.nota?`<div class="note">${esc(d.nota)}</div>`:""}
+        <div class="src">${e.fuente?`Fuente: ${esc(e.fuente)}`:""}${e.actualizado?` · actualizado ${esc(fmtDate(e.actualizado))}`:""}</div>
+      </div>`;
+    const main=el.querySelector(".main");
+    if(editing===d.id){
+      const f=document.createElement("form"); f.className="edit";
+      f.innerHTML=`
+        <label>Viento medio (kn)<input type="number" name="viento" min="0" max="60" step="1" value="${esc(d.viento??"")}"></label>
+        <label>Rango (p. ej. 13–17)<input type="text" name="rango" value="${esc(d.rango??"")}"></label>
+        <label>Rachas (kn)<input type="number" name="racha" min="0" max="70" step="1" value="${esc(d.racha??"")}"></label>
+        <label>Dirección<select name="dir"><option value="">—</option>${DIRS.map((n,i)=>`<option value="${i*22.5}" ${d.dir!=null&&d.dir!==""&&Math.round(+d.dir/22.5)%16===i?"selected":""}>${n}</option>`).join("")}</select></label>
+        <label>Fuente<input type="text" name="fuente" value="${esc(d.fuente??"")}" placeholder="Windguru GFS 13 nov"></label>
+        <label class="wide">Nota<input type="text" name="nota" value="${esc(d.nota??"")}"></label>
+        <div class="actions"><button class="btn primary" type="submit">Guardar</button><button class="btn" type="button" data-cancel>Cancelar</button></div>`;
+      f.addEventListener("submit",async e=>{e.preventDefault();
+        const num=v=>v===""?null:+v;
+        const patch={viento:num(f.viento.value),rango:f.rango.value.trim(),racha:num(f.racha.value),dir:f.dir.value===""?null:+f.dir.value,fuente:f.fuente.value.trim(),nota:f.nota.value.trim(),actualizado:Date.now()};
+        try{await db.doc("dias/"+d.id).update(patch); editing=null; render();}catch(err){showErr(err)}});
+      f.querySelector("[data-cancel]").addEventListener("click",()=>{editing=null;render();});
+      main.appendChild(f);
+    } else if(canWrite){
+      const b=document.createElement("button");b.className="btn";b.type="button";b.textContent="Actualizar previsión";b.style.alignSelf="flex-start";
+      b.addEventListener("click",()=>{editing=d.id;render();});main.appendChild(b);
+    }
+    daysEl.appendChild(el);
+  });
+  const last=Math.max(0,...days.map(d=>eff(d).actualizado||0));
+  $("#lastupd").textContent= last? `Última actualización: ${fmtDate(last)}` : "";
+}
+function renderPack(){
+  const el=$("#pack"); el.textContent="";
+  const withWind=days.map(eff).filter(d=>d.viento);
+  riders.slice().sort((a,b)=>(a.orden||0)-(b.orden||0)).forEach(r=>{
+    const q=parseQuiver(r.quiver); const count={}; let short=0, big=0, nd=0;
+    withWind.forEach(d=>{const rec=recommend(r,d); if(!rec) return; nd++;
+      if(rec.size!=null) count[rec.size]=(count[rec.size]||0)+1;
+      else if(/Poco/.test(rec.warn||"")) short++; else if(/Mucho/.test(rec.warn||"")) big++;});
+    const card=document.createElement("div"); card.className="packcard";
+    const c=rcolor(r);
+    let chips = q.length ? q.map(s=>count[s]?`<span class="chip" style="color:${c}">${s} m · ${count[s]} ${count[s]===1?"día":"días"}</span>`:`<span class="chip off">${s} m · 0</span>`).join("") : `<span class="hint">Falta el quiver</span>`;
+    if(short) chips+=`<span class="chip warn">Más grande · ${short} ${short===1?"día":"días"}</span>`;
+    if(big) chips+=`<span class="chip warn">Más pequeña · ${big} ${big===1?"día":"días"}</span>`;
+    card.innerHTML=`<div class="name rname" style="font:700 19px 'Barlow Condensed',sans-serif">${avatar(r,28)}${esc(r.nombre)}</div><div class="chips">${r.peso?chips:'<span class="hint">Falta el peso</span>'}</div>`;
+    el.appendChild(card);
+  });
+}
+function render(){renderRiders();renderPack();renderDays();}
+function showErr(e){
+  statusEl.hidden=false;
+  if(e&&e.code==="invalid_argument"){canWrite=false;editing=null;editingRider=null;statusEl.textContent="Puedes ver la previsión, pero no tienes permiso para cambiarla.";render();return}
+  statusEl.textContent="No se ha podido guardar. Prueba otra vez en un momento.";
+}
+
+(async()=>{
+  db = window.claude ? await claude.use("db") : null;
+  if(!db){
+    // Read-only fallback: embedded snapshot (standalone file) or snapshot.json next to the page
+    let snap=window.SNAP||null;
+    if(!snap){ try{ const r=await fetch("snapshot.json",{cache:"no-store"}); if(r.ok) snap=await r.json(); }catch(e){} }
+    if(!snap){statusEl.textContent="No se puede cargar la previsión desde aquí.";return}
+    canWrite=false; days=snap.dias||[]; riders=snap.riders||[];
+    if(snap.fc&&!FC) FC=snap.fc;
+    statusEl.hidden=false;
+    statusEl.textContent=`Versión de solo lectura · datos del ${snap.generado||""}. Para actualizarla, ábrela con la cuenta de Claude de Raúl.`;
+    render();
+    if(snap.live){ setupLive(); loadLive(); }
+    return;
+  }
+  const user = await claude.use("user");
+  if(user && typeof user.can==="function"){ try{ if(await user.can("data.write")===false) canWrite=false; }catch(e){} }
+  let gotDays=false, gotRiders=false;
+  const timer=setTimeout(()=>{ if(!gotDays){statusEl.hidden=false;statusEl.textContent="La previsión tarda en llegar. Puede que la conexión vaya lenta.";}},10000);
+  const done=()=>{ if(gotDays&&gotRiders){clearTimeout(timer); if(days.length) statusEl.hidden=true; else {statusEl.hidden=false;statusEl.textContent="Todavía no hay días cargados.";}} };
+  db.collection("dias").onSnapshot(s=>{days=s.docs.map(x=>({id:x.id,...x.data()}));gotDays=true;done();render();},
+    ()=>{clearTimeout(timer);statusEl.hidden=false;statusEl.textContent="Se ha perdido la conexión. Recarga la página.";});
+  db.collection("riders").onSnapshot(s=>{riders=s.docs.map(x=>({id:x.id,...x.data()}));gotRiders=true;done();render();},()=>{});
+})();
+</script>
+</body>
+</html>
