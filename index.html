@@ -246,7 +246,7 @@ function eff(d){
   return {...d, viento:s.mean, rango:`${s.min}–${s.max}`, racha:s.gust, dir:s.dir, fuente:`${FC.fuente} · ${s.spots}`, actualizado:jt};
 }
 const WG={"Praia do Preá":206886,"Jericoacoara":743,"Tatajuba":206872,"Camocim":206850,"Barra Grande":235167,"Taíba (laguna)":206863};
-const WA={"Praia do Preá":"67447/Prea+Beach+Praia+do+Pre%C3%A1","Jericoacoara":"14880/Jeri","Tatajuba":"79785/Nova+Tatajuba","Camocim":"80745/Camocim","Barra Grande":"17082/Barra+Grande+PI","Taíba (laguna)":"79775/Taiba+Lagoon+Lagoa+de+Taiba"};
+const WA={"Praia do Preá":"67447/Prea+Beach+Praia+do+Pre%C3%A1","Jericoacoara":"518411/Jericoacoara+Jijoca+Jijoca+de+Jericoacoara","Tatajuba":"79785/Nova+Tatajuba","Camocim":"80745/Camocim","Barra Grande":"17082/Barra+Grande+PI","Taíba (laguna)":"79775/Taiba+Lagoon+Lagoa+de+Taiba"};
 function wgLink(name){ const id=WG[name], wa=WA[name]; if(!id&&!wa) return "";
   return `<span class="wglinks">${id?`<a class="wg" href="https://www.windguru.cz/${id}" target="_blank" rel="noopener">Windguru ↗</a>`:""}${wa?`<a class="wg" href="https://windy.app/forecast2/spot/${wa}" target="_blank" rel="noopener">Windy.app ↗</a>`:""}</span>`; }
 function strips(day){
