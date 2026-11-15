@@ -94,6 +94,9 @@ table.hrs td.ar{padding:0}
 .trend.up{color:var(--teal)} .trend.down{color:#B93A18} .trend.eq{color:var(--muted)}
 .tides{font-size:13.5px;display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline}
 .tides .night{color:var(--muted)}
+.tidechk{font-size:13.5px;background:#FDECE6;border-left:4px solid var(--coral);border-radius:6px;padding:7px 10px}
+.tidechk b{color:#B93A18}
+.tidechk a{color:var(--ink);font-weight:700}
 .strip .tip{margin-top:8px;font-size:13px;line-height:1.4;color:#E7EEF3}
 .strip .tip b{color:#7FD3C9}
 .daytips{font-size:13.5px;display:flex;flex-direction:column;gap:4px}
@@ -164,7 +167,7 @@ form.edit .actions{display:flex;gap:8px;grid-column:1/-1}
   </section>
 
   <div class="how"><span id="attr"></span>
-    <b>Cómo se calcula.</b> Tamaño ideal ≈ peso (kg) × 2,2 ÷ viento medio (kn). Si las rachas superan en más de un 35 % al viento medio, se baja un 10 %. Luego se elige la cometa del quiver de cada uno más cercana a ese ideal. <b>Si un rider pone el rango oficial de cada cometa</b> (por ejemplo 12:10-27), se usa ese rango en lugar de la fórmula: sale la cometa más pequeña cuyo mínimo quede al menos 2 kn por debajo del viento medio y cuyo máximo aguante las rachas. <b>Cometa por tramo:</b> con los datos por horas se calcula una cometa para la mañana (9–12 h) y otra para la tarde (13–17 h), cada una con su viento medio y su racha máxima. <b>Mareas:</b> tabla de tide-forecast.com para Camocim los días 16 a 20 (orientativa para el resto de spots de la ruta) y de tabuademares.com para Pecém, junto a Taíba, los días 21 y 22. <b>Marea por spot:</b> resumen de guías de kite (The Kite Spot, MACkite, wannakitesurf, kiteforum, surf-magazin, EFPT, KiteWorldWide, LKB y Kitesurfer Brazil), referido al spot donde de verdad se navega en cada destino; las condiciones cambian con los bancos de arena, así que manda lo que se vea en la playa. <b>Tendencia:</b> diferencia del viento medio del día respecto a la actualización anterior. <b>Guía del downwind:</b> resumen de guías y operadores de kite (Wake Up Stoked, Oasis Kite Trip, Convento Arcadia, Rota Insider, kiteforum y LKB); la ruta real y las paradas las decide Iván. <b>Gráficos por horas:</b> vienen de Windguru (blend WG) y los actualiza Claude; si alguien mete a mano una previsión más reciente, manda la suya. Es una regla orientativa para twin-tip: con el viento real en la playa, manda la sensación y lo que diga Iván.
+    <b>Cómo se calcula.</b> Tamaño ideal ≈ peso (kg) × 2,2 ÷ viento medio (kn). Si las rachas superan en más de un 35 % al viento medio, se baja un 10 %. Luego se elige la cometa del quiver de cada uno más cercana a ese ideal. <b>Si un rider pone el rango oficial de cada cometa</b> (por ejemplo 12:10-27), se usa ese rango en lugar de la fórmula: sale la cometa más pequeña cuyo mínimo quede al menos 2 kn por debajo del viento medio y cuyo máximo aguante las rachas. <b>Cometa por tramo:</b> con los datos por horas se calcula una cometa para la mañana (9–12 h) y otra para la tarde (13–17 h), cada una con su viento medio y su racha máxima. <b>Mareas:</b> se muestra la estación más cercana a cada spot: Jericoacoara (temperaturadomar.pt), Camocim (tabuademares.com), y Luís Correia y Pecém (datos de la Marinha de Brasil, vía mymento.com.br). Son predicciones astronómicas, muy fiables en hora; dentro de lagunas y ríos la marea llega algo más tarde. <b>Marea por spot:</b> resumen de guías de kite (The Kite Spot, MACkite, wannakitesurf, kiteforum, surf-magazin, EFPT, KiteWorldWide, LKB y Kitesurfer Brazil), referido al spot donde de verdad se navega en cada destino; las condiciones cambian con los bancos de arena, así que manda lo que se vea en la playa. <b>Tendencia:</b> diferencia del viento medio del día respecto a la actualización anterior. <b>Guía del downwind:</b> resumen de guías y operadores de kite (Wake Up Stoked, Oasis Kite Trip, Convento Arcadia, Rota Insider, kiteforum y LKB); la ruta real y las paradas las decide Iván. <b>Gráficos por horas:</b> vienen de Windguru (blend WG) y los actualiza Claude; si alguien mete a mano una previsión más reciente, manda la suya. Es una regla orientativa para twin-tip: con el viento real en la playa, manda la sensación y lo que diga Iván.
   </div>
 </div>
 
@@ -320,7 +323,16 @@ function trend(day){
   return `<span class="trend eq">= sin cambios vs. previsión anterior</span>`;
 }
 // Tide tables, local time: Camocim (tide-forecast.com) for days 16-20, Pecém (tabuademares.com) for days 21-22. P = pleamar, B = bajamar
-const TIDES={"16":[["B","04:06",0.8],["P","10:26",2.4],["B","16:29",0.9],["P","22:45",2.5]],"17":[["B","05:13",0.8],["P","11:37",2.4],["B","17:46",1.0]],"18":[["P","00:02",2.5],["B","06:27",0.8],["P","12:50",2.5],["B","19:02",0.9]],"19":[["P","01:16",2.5],["B","07:34",0.8],["P","13:53",2.6],["B","20:06",0.7]],"20":[["P","02:19",2.6],["B","08:31",0.7],["P","14:46",2.7],["B","21:00",0.6]],"21":[["P","01:43",2.5],["B","07:52",0.6],["P","14:05",2.6],["B","20:18",0.5]],"22":[["P","02:29",2.6],["B","08:36",0.4],["P","14:51",2.8],["B","21:06",0.3]]};
+// Nearest station per day: Jericoacoara (temperaturadomar.pt), Camocim (tabuademares.com), Luís Correia and Pecém (Marinha do Brasil data via mymento.com.br)
+const TIDES={
+  "16":[["Jericoacoara",[["B","03:03",1.1],["P","09:27",2.3],["B","15:17",1.3],["P","21:38",2.5]]]],
+  "17":[["Jericoacoara",[["B","04:06",1.2],["P","10:38",2.3],["B","16:29",1.4],["P","22:51",2.5]]],["Camocim",[["B","04:26",0.9],["P","11:06",2.2],["B","16:51",1.1],["P","23:10",2.3]]]],
+  "18":[["Camocim",[["B","05:36",0.9],["P","12:06",2.3],["B","18:00",1.0]]]],
+  "19":[["Camocim",[["P","00:10",2.4],["B","06:35",0.8],["P","12:56",2.4],["B","19:03",0.8]]],["Luís Correia",[["B","06:27",1.0],["P","12:46",2.5],["B","18:55",1.1]]]],
+  "20":[["Luís Correia",[["P","00:57",2.6],["B","07:17",0.9],["P","13:29",2.7],["B","19:49",0.8]]]],
+  "21":[["Pecém",[["P","01:40",2.5],["B","07:49",0.6],["P","14:02",2.6],["B","20:16",0.5]]]],
+  "22":[["Pecém",[["P","02:27",2.7],["B","08:34",0.4],["P","14:49",2.8],["B","21:04",0.3]]]]
+};
 // Which tide suits each spot (from kite spot guides; see sources in the footer)
 const TIDE_TIP={
   "Praia do Preá":[["Playa de Preá y Barrinha (mar abierto)","cualquiera","Con marea baja el agua queda poco profunda y más plana; con la marea subiendo entran kickers y olitas. Playa ancha de arena, sin rocas ni corrientes fuertes."]],
@@ -358,10 +370,23 @@ const DW={
 };
 function dwGuide(day){ const g=DW[day]; if(!g) return "";
   return `<details class="dw"><summary>Guía del downwind<span>${esc(g.t)} · ${esc(g.m)}</span></summary><p>${esc(g.r)}</p><h4>A tener en cuenta</h4><ul>${g.o.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`; }
+// Reminder to confirm the tide on the day, with the page to check
+const TIDE_URL={jeri:["Jericoacoara","https://www.temperaturadomar.pt/america-do-sul/brasil/jijoca-de-jericoacoara/tides.html"],cam:["Camocim","https://tabuademares.com/br/ceara/camocim"],lc:["Luís Correia","https://mymento.com.br/tabua-de-mares/luis-correia-pi"],pec:["Pecém","https://mymento.com.br/tabua-de-mares/pecem-ce"]};
+const TIDE_CHK={
+  "16":["Tabla de Jericoacoara; en Barrinha y Preá la marea va unos minutos antes.",["jeri"]],
+  "17":["Guriú va con la tabla de Jericoacoara; la laguna de Tatajuba queda entre las dos, y las dos lagunas dependen de la marea.",["jeri","cam"]],
+  "18":["Mirad la bajamar antes de salir: con marea baja hay rocas entre la Ilha do Amor y Maceió.",["cam"]],
+  "19":["Maceió va con Camocim (en mar abierto, algo antes que dentro del río); Barra Grande, con Luís Correia.",["cam","lc"]],
+  "20":["Barra Grande y Macapá van con Luís Correia, la estación más cercana; dentro de lagunas y bocas de río la marea puede ir algo retrasada.",["lc"]],
+  "21":["Tabla de Pecém, junto a Taíba, con datos de la Marinha de Brasil. La laguna no depende de la marea; el mar, sí.",["pec"]],
+  "22":["Tabla de Pecém, junto a Taíba, con datos de la Marinha de Brasil. La laguna no depende de la marea; el mar, sí.",["pec"]]
+};
+function tideCheck(day){ const c=TIDE_CHK[day]; if(!c) return "";
+  return `<div class="tidechk"><b>Confirmad la marea el mismo día.</b> ${esc(c[0])} Consultar: ${c[1].map(k=>`<a href="${TIDE_URL[k][1]}" target="_blank" rel="noopener">mareas de ${esc(TIDE_URL[k][0])} ↗</a>`).join(" · ")}</div>`; }
 function tides(day){
-  const t=TIDES[day]; if(!t) return "";
-  return `<div class="tides"><b>Mareas</b>${t.map(x=>{const h=+x[1].slice(0,2), night=h<6||h>=18;
-    return `<span class="${night?"night":""}">${x[0]==="P"?"Pleamar":"Bajamar"} ${x[1]} (${String(x[2].toFixed(1)).replace(".",",")} m)</span>`;}).join("")}<span class="night">ref. ${+day>=21?"Pecém, junto a Taíba":"Camocim"}</span></div>`;
+  const T=TIDES[day]; if(!T) return "";
+  return T.map(([ref,t])=>`<div class="tides"><b>Mareas en ${esc(ref)}</b>${t.map(x=>{const h=+x[1].slice(0,2), night=h<6||h>=18;
+    return `<span class="${night?"night":""}">${x[0]==="P"?"Pleamar":"Bajamar"} ${x[1]} (${String(x[2].toFixed(1)).replace(".",",")} m)</span>`;}).join("")}</div>`).join("")+tideCheck(day);
 }
 const EXTRA={"19":[["Maceió (Camocim) en Windy.app","https://windy.app/forecast2/spot/625548/Maceio.+Camocim"]]};
 function extra(day){ const x=EXTRA[day]; return x?`<div class="src">Otros spots: ${x.map(l=>`<a href="${l[1]}" target="_blank" rel="noopener">${esc(l[0])} ↗</a>`).join(" · ")}</div>`:""; }
