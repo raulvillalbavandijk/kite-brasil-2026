@@ -1,3 +1,4 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -50,7 +51,7 @@ h2{margin:0;font:700 22px "Barlow Condensed",sans-serif;letter-spacing:.06em;tex
 .windbadge.none b{font:700 16px "Barlow",sans-serif}
 .arrow{width:30px;height:30px;flex:none}
 .src{font-size:12.5px;color:var(--muted)}
-.kites{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.kites{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:8px}
 .kite{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff;display:flex;justify-content:space-between;align-items:center;gap:8px}
 .kite .who{font-weight:700}
 .kite .size{font:900 26px/1 "Big Shoulders Display",sans-serif;color:var(--teal)}
@@ -68,7 +69,9 @@ h2{margin:0;font:700 22px "Barlow Condensed",sans-serif;letter-spacing:.06em;tex
 .hint{font-size:12.5px;color:var(--muted)}
 .strips{display:flex;flex-direction:column;gap:8px}
 .strip{background:#12304A;border-radius:10px;padding:8px 10px;color:#E7EEF3;overflow-x:auto}
-.strip .sname{font:700 14px "Barlow Condensed",sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#7FD3C9;margin-bottom:4px}
+.strip .sname{font:700 14px "Barlow Condensed",sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#7FD3C9;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.strip .sname .wglinks{display:flex;gap:14px;flex-wrap:wrap}
+.strip .sname a.wg{color:#F4EDE1;font:600 13px "Barlow",sans-serif;letter-spacing:0;text-transform:none;text-decoration:underline;padding:4px 0}
 table.hrs{border-collapse:separate;border-spacing:2px;font-variant-numeric:tabular-nums;min-width:100%}
 table.hrs th{font:600 12px "Barlow",sans-serif;color:#A9BBC8;text-align:left;padding:2px 6px 2px 0;white-space:nowrap}
 table.hrs thead th{text-align:center;color:#E7EEF3;font-weight:700}
@@ -80,6 +83,29 @@ table.hrs td.ar{padding:0}
 .srcbanner a{color:#F4EDE1;font-weight:700}
 .note{font-size:13.5px;background:#F1E8D8;border-radius:8px;padding:6px 10px}
 
+.srcbanner .stale{background:#B93A18;color:#fff;border-radius:8px;padding:8px 10px;font-weight:700}
+.kite .sizes{display:flex;gap:14px;align-items:flex-start;text-align:right}
+.kite .scol{display:flex;flex-direction:column;align-items:flex-end}
+.kite .slab{font:700 11.5px "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.day.today{outline:3px solid var(--coral);outline-offset:1px}
+.day.past{opacity:.55}
+.hoy{align-self:flex-start;background:var(--coral);color:#fff;border-radius:999px;padding:1px 9px;font:700 13px "Barlow Condensed",sans-serif;letter-spacing:.1em;text-transform:uppercase}
+.trend{font-weight:700;font-size:13px;white-space:nowrap}
+.trend.up{color:var(--teal)} .trend.down{color:#B93A18} .trend.eq{color:var(--muted)}
+.tides{font-size:13.5px;display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline}
+.tides .night{color:var(--muted)}
+.strip .tip{margin-top:8px;font-size:13px;line-height:1.4;color:#E7EEF3}
+.strip .tip b{color:#7FD3C9}
+.daytips{font-size:13.5px;display:flex;flex-direction:column;gap:4px}
+.daytips b{color:var(--teal)}
+.dw{border:1px solid var(--line);border-radius:10px;background:#fff;padding:8px 12px;font-size:14px}
+.dw summary{font:700 16px "Barlow Condensed",sans-serif;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;color:var(--teal);min-height:28px}
+.dw summary span{font:600 13px "Barlow",sans-serif;letter-spacing:0;text-transform:none;color:var(--muted);margin-left:6px}
+.dw p{margin:8px 0 4px}
+.dw h4{margin:8px 0 2px;font:700 13px "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--coral)}
+.dw ul{margin:2px 0 4px;padding-left:18px}
+.dw li{margin:3px 0}
+.src a{color:var(--teal);font-weight:600}
 button{font:inherit;cursor:pointer}
 .btn{border:1px solid var(--ink);background:transparent;color:var(--ink);border-radius:999px;padding:5px 12px;font-weight:600;font-size:13px;min-height:34px}
 .btn.primary{background:var(--ink);color:#fff}
@@ -103,7 +129,7 @@ form.edit .actions{display:flex;gap:8px;grid-column:1/-1}
   <header>
     <div class="eyebrow">Kitesurfari Brasil · 15–22 nov 2026</div>
     <h1>Viento <span>y cometas</span></h1>
-    <p class="sub">Previsión por spot y día, y qué cometa saca cada uno. Esta versión se actualiza sola con la previsión de Open-Meteo cada vez que la abres (necesita internet).</p>
+    <p class="sub">Previsión por spot y día, y qué cometa saca cada uno. Se actualiza para todo el grupo cada vez que alguien mete los nudos nuevos de Windguru.</p>
     <p class="sub" id="lastupd"></p>
   </header>
   <div class="srcbanner" id="srcbanner" aria-live="polite"></div>
@@ -138,11 +164,11 @@ form.edit .actions{display:flex;gap:8px;grid-column:1/-1}
   </section>
 
   <div class="how"><span id="attr"></span>
-    <b>Cómo se calcula.</b> Tamaño ideal ≈ peso (kg) × 2,2 ÷ viento medio (kn). Si las rachas superan en más de un 35 % al viento medio, se baja un 10 %. Luego se elige la cometa del quiver de cada uno más cercana a ese ideal. <b>Si un rider pone el rango oficial de cada cometa</b> (por ejemplo 12:10-27), se usa ese rango en lugar de la fórmula: sale la cometa más pequeña cuyo mínimo quede al menos 2 kn por debajo del viento medio y cuyo máximo aguante las rachas. <b>Gráficos por horas:</b> vienen de Windguru (blend WG) y los actualiza Claude; si alguien mete a mano una previsión más reciente, manda la suya. Es una regla orientativa para twin-tip: con el viento real en la playa, manda la sensación y lo que diga Iván.
+    <b>Cómo se calcula.</b> Tamaño ideal ≈ peso (kg) × 2,2 ÷ viento medio (kn). Si las rachas superan en más de un 35 % al viento medio, se baja un 10 %. Luego se elige la cometa del quiver de cada uno más cercana a ese ideal. <b>Si un rider pone el rango oficial de cada cometa</b> (por ejemplo 12:10-27), se usa ese rango en lugar de la fórmula: sale la cometa más pequeña cuyo mínimo quede al menos 2 kn por debajo del viento medio y cuyo máximo aguante las rachas. <b>Cometa por tramo:</b> con los datos por horas se calcula una cometa para la mañana (9–12 h) y otra para la tarde (13–17 h), cada una con su viento medio y su racha máxima. <b>Mareas:</b> tabla de tide-forecast.com para Camocim los días 16 a 20 (orientativa para el resto de spots de la ruta) y de tabuademares.com para Pecém, junto a Taíba, los días 21 y 22. <b>Marea por spot:</b> resumen de guías de kite (The Kite Spot, MACkite, wannakitesurf, kiteforum, surf-magazin, EFPT, KiteWorldWide, LKB y Kitesurfer Brazil), referido al spot donde de verdad se navega en cada destino; las condiciones cambian con los bancos de arena, así que manda lo que se vea en la playa. <b>Tendencia:</b> diferencia del viento medio del día respecto a la actualización anterior. <b>Guía del downwind:</b> resumen de guías y operadores de kite (Wake Up Stoked, Oasis Kite Trip, Convento Arcadia, Rota Insider, kiteforum y LKB); la ruta real y las paradas las decide Iván. <b>Gráficos por horas:</b> vienen de Windguru (blend WG) y los actualiza Claude; si alguien mete a mano una previsión más reciente, manda la suya. Es una regla orientativa para twin-tip: con el viento real en la playa, manda la sensación y lo que diga Iván.
   </div>
 </div>
 
-<script>window.SNAP={"generado": "12 nov 2026", "riders": [{"id": "raul", "nombre": "Raúl", "orden": 1, "peso": 80, "quiver": "7:19-37, 9:14-31, 10:13-31, 12:10-27", "modelos": "Evo 7 · Neo SLS 9 · Evo 10 · Evo SLS 12"}, {"id": "paco", "nombre": "Paco", "orden": 2, "peso": 85, "quiver": "8, 10, 12"}, {"id": "nacho", "nombre": "Nacho", "orden": 3, "peso": 91, "quiver": "9, 12"}, {"id": "jorge", "nombre": "Jorge", "orden": 4, "peso": 73, "quiver": "7, 9, 10, 12"}], "dias": [{"id": "d15", "orden": 15, "fecha": "15", "dia_semana": "Dom", "franja": "Llegada 17:00", "spot": "Cumbuco", "plan": "Llegada a Fortaleza y traslado. Sin sesión.", "viento": null, "nota": ""}, {"id": "d16", "orden": 16, "fecha": "16", "dia_semana": "Lun", "franja": "09–17 h", "spot": "Barrinha → Preá → Jericoacoara", "plan": "Downwind Barrinha → duna de Jeri (~18 km)", "nota": "El día más flojo de la semana según la previsión de hoy.", "actualizado": 1794483600000}, {"id": "d17", "orden": 17, "fecha": "17", "dia_semana": "Mar", "franja": "09–17 h", "spot": "Jeri → Guriú → Tatajuba", "plan": "Downwind ~22 km", "nota": "Mareas muertas: la laguna de Tatajuba puede ir baja.", "actualizado": 1794483600000}, {"id": "d18", "orden": 18, "fecha": "18", "dia_semana": "Mié", "franja": "09–17 h", "spot": "Tatajuba → Camocim → Maceió", "plan": "Downwind ~29 km + sunset en Camocim", "nota": "Sube por la tarde.", "actualizado": 1794483600000}, {"id": "d19", "orden": 19, "fecha": "19", "dia_semana": "Jue", "franja": "09–17 h", "spot": "Maceió → Barra dos Remédios → Bitupitá", "plan": "Downwind ~35 km + coche a Barra Grande", "nota": "Sin spot de Windguru en Maceió ni Bitupitá: se usan Camocim y Barra Grande.", "actualizado": 1794483600000}, {"id": "d20", "orden": 20, "fecha": "20", "dia_semana": "Vie", "franja": "09–17 h", "spot": "Macapá (desde Barra Grande)", "plan": "Downwind corto a la laguna de Macapá, temprano. Opcional: barco al Delta del Parnaíba", "nota": "", "actualizado": 1794483600000}, {"id": "d21", "orden": 21, "fecha": "21", "dia_semana": "Sáb", "franja": "Tarde (12–18 h)", "spot": "Taíba", "plan": "Traslado largo y sesión de tarde", "nota": "Datos del spot de la laguna; en el mar suele soplar algo más.", "actualizado": 1794483600000}, {"id": "d22", "orden": 22, "fecha": "22", "dia_semana": "Dom", "franja": "Mañana (6–12 h)", "spot": "Taíba", "plan": "Última sesión y al aeropuerto", "nota": "Datos del spot de la laguna.", "actualizado": 1794483600000}], "live": {"start": "2026-11-15", "end": "2026-11-22", "spots": {"prea": {"name": "Praia do Preá", "lat": -2.785, "lon": -40.41}, "jeri": {"name": "Jericoacoara", "lat": -2.765, "lon": -40.515}, "tatajuba": {"name": "Tatajuba", "lat": -2.8, "lon": -40.69}, "camocim": {"name": "Camocim", "lat": -2.855, "lon": -40.84}, "barragrande": {"name": "Barra Grande", "lat": -2.88, "lon": -41.41}, "taiba": {"name": "Taíba", "lat": -3.505, "lon": -38.87}}, "plan": {"16": ["prea", "jeri"], "17": ["jeri", "tatajuba"], "18": ["tatajuba", "camocim"], "19": ["camocim", "barragrande"], "20": ["barragrande"], "21": ["taiba"], "22": ["taiba"]}}};</script>
+<script>window.SNAP={"generado": "15 nov 2026", "riders": [{"id": "raul", "nombre": "Raúl", "orden": 1, "peso": 80, "quiver": "9:14-31, 10:13-31, 12:10-27", "modelos": "Neo SLS 9 · Evo 10 · Evo SLS 12"}, {"id": "paco", "nombre": "Paco", "orden": 2, "peso": 85, "quiver": "8, 10, 12"}, {"id": "nacho", "nombre": "Nacho", "orden": 3, "peso": 91, "quiver": "9, 12"}, {"id": "jorge", "nombre": "Jorge", "orden": 4, "peso": 73, "quiver": "7, 9, 10, 12"}], "dias": [{"id": "d15", "orden": 15, "fecha": "15", "dia_semana": "Dom", "franja": "Llegada 17:00", "spot": "Cumbuco", "plan": "Llegada a Fortaleza y traslado. Sin sesión.", "nota": "", "viento": null}, {"id": "d16", "orden": 16, "fecha": "16", "dia_semana": "Lun", "franja": "09–17 h", "spot": "Barrinha → Preá → Jericoacoara", "plan": "Downwind Barrinha → duna de Jeri (~18 km)", "nota": "", "viento": null}, {"id": "d17", "orden": 17, "fecha": "17", "dia_semana": "Mar", "franja": "09–17 h", "spot": "Jeri → Guriú → Tatajuba", "plan": "Downwind ~22 km", "nota": "Mareas muertas: la laguna de Tatajuba puede ir baja.", "viento": null}, {"id": "d18", "orden": 18, "fecha": "18", "dia_semana": "Mié", "franja": "09–17 h", "spot": "Tatajuba → Camocim → Maceió", "plan": "Downwind ~29 km + sunset en Camocim", "nota": "", "viento": null}, {"id": "d19", "orden": 19, "fecha": "19", "dia_semana": "Jue", "franja": "09–17 h", "spot": "Maceió → Barra dos Remédios → Bitupitá", "plan": "Downwind ~35 km + coche a Barra Grande", "nota": "Sin punto propio en Maceió ni Bitupitá: se usan Camocim y Barra Grande.", "viento": null}, {"id": "d20", "orden": 20, "fecha": "20", "dia_semana": "Vie", "franja": "09–17 h", "spot": "Macapá (desde Barra Grande)", "plan": "Downwind corto a la laguna de Macapá, temprano. Opcional: barco al Delta del Parnaíba", "nota": "", "viento": null}, {"id": "d21", "orden": 21, "fecha": "21", "dia_semana": "Sáb", "franja": "Tarde (12–18 h)", "spot": "Taíba", "plan": "Traslado largo y sesión de tarde", "nota": "Punto en el mar frente a Taíba; en la laguna suele soplar algo menos.", "viento": null}, {"id": "d22", "orden": 22, "fecha": "22", "dia_semana": "Dom", "franja": "Mañana (6–12 h)", "spot": "Taíba", "plan": "Última sesión y al aeropuerto", "nota": "", "viento": null}], "live": {"start": "2026-11-15", "end": "2026-11-22", "spots": {"prea": {"name": "Praia do Preá", "lat": -2.785, "lon": -40.41}, "jeri": {"name": "Jericoacoara", "lat": -2.765, "lon": -40.515}, "tatajuba": {"name": "Tatajuba", "lat": -2.8, "lon": -40.69}, "camocim": {"name": "Camocim", "lat": -2.855, "lon": -40.84}, "barragrande": {"name": "Barra Grande", "lat": -2.88, "lon": -41.41}, "taiba": {"name": "Taíba", "lat": -3.505, "lon": -38.87}}, "plan": {"16": ["prea", "jeri"], "17": ["jeri", "tatajuba"], "18": ["tatajuba", "camocim"], "19": ["camocim", "barragrande"], "20": ["barragrande"], "21": ["taiba"], "22": ["taiba"]}}};</script>
 <script>
 const $=s=>document.querySelector(s);
 const statusEl=$("#status"), daysEl=$("#days"), ridersEl=$("#riders");
@@ -216,14 +242,18 @@ function eff(d){
   if(d.actualizado && d.actualizado>jt) return d; // a manual update newer than the file wins
   return {...d, viento:s.mean, rango:`${s.min}–${s.max}`, racha:s.gust, dir:s.dir, fuente:`${FC.fuente} · ${s.spots}`, actualizado:jt};
 }
+const WG={"Praia do Preá":206886,"Jericoacoara":743,"Tatajuba":206872,"Camocim":206850,"Barra Grande":235167,"Taíba (laguna)":206863};
+const WA={"Praia do Preá":"67447/Prea+Beach+Praia+do+Pre%C3%A1","Jericoacoara":"14880/Jeri","Tatajuba":"79785/Nova+Tatajuba","Camocim":"80745/Camocim","Barra Grande":"17082/Barra+Grande+PI","Taíba (laguna)":"79775/Taiba+Lagoon+Lagoa+de+Taiba"};
+function wgLink(name){ const id=WG[name], wa=WA[name]; if(!id&&!wa) return "";
+  return `<span class="wglinks">${id?`<a class="wg" href="https://www.windguru.cz/${id}" target="_blank" rel="noopener">Windguru ↗</a>`:""}${wa?`<a class="wg" href="https://windy.app/forecast2/spot/${wa}" target="_blank" rel="noopener">Windy.app ↗</a>`:""}</span>`; }
 function strips(day){
   const sp=FC&&FC.dias&&FC.dias[day]; if(!sp) return "";
-  return `<div class="strips">${sp.map(s=>`<div class="strip"><div class="sname">${esc(s.spot)}</div>
+  return `<div class="strips">${sp.map(s=>`<div class="strip"><div class="sname"><span>${esc(s.spot)}</span>${wgLink(s.spot)}</div>
     <table class="hrs"><thead><tr><th scope="col"><span class="sr">Hora</span></th>${s.horas.map(h=>`<th scope="col">${h[0]}h</th>`).join("")}</tr></thead><tbody>
     <tr><th scope="row">Dir.</th>${s.horas.map(h=>`<td class="ar">${arrowSmall(h[3])}</td>`).join("")}</tr>
     <tr><th scope="row">kn</th>${s.horas.map(h=>`<td style="background:${kc(h[1])};color:${kt(h[1])}">${h[1]}</td>`).join("")}</tr>
     <tr><th scope="row">Rachas</th>${s.horas.map(h=>`<td style="background:${kc(h[2])};color:${kt(h[2])}">${h[2]}</td>`).join("")}</tr>
-    </tbody></table></div>`).join("")}</div>`;
+    </tbody></table>${tideTip(s.spot)}</div>`).join("")}</div>`;
 }
 
 // ---- Live mode (standalone file): fetch Open-Meteo on open ----
@@ -263,6 +293,82 @@ function setupLive(){
 
 if(window.SNAP&&window.SNAP.fc){FC=window.SNAP.fc;}
 else fetch("forecast.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{if(j){FC=j;render();}}).catch(()=>{});
+// ---- Sessions (morning / afternoon), tides, today, trend ----
+function fcWin(day,lo,hi){
+  const sp=FC&&FC.dias&&FC.dias[day]; if(!sp) return null;
+  const hs=sp.flatMap(s=>s.horas.filter(h=>h[0]>=lo&&h[0]<=hi)); if(!hs.length) return null;
+  const raw=hs.reduce((a,h)=>a+h[1],0)/hs.length;
+  return {viento:Math.round(raw), raw, racha:Math.max(...hs.map(h=>h[2]))};
+}
+function sessions(d,e){
+  const day=String(d.fecha), f=String(d.franja||""), one=[{label:"",short:"",viento:e.viento,racha:e.racha,_day:day}];
+  if(e===d) return one; // manual forecast: no hourly data behind it
+  const onlyAM=/^Mañana/i.test(f), onlyPM=/^Tarde/i.test(f), out=[];
+  if(!onlyPM){ const lo=onlyAM?6:9, m=fcWin(day,lo,12); if(m) out.push({label:`Mañana ${lo}–12 h`,short:"Mañana",...m,_day:day}); }
+  if(!onlyAM){ const lo=onlyPM?12:13, hi=onlyPM?18:17, t=fcWin(day,lo,hi); if(t) out.push({label:`Tarde ${lo}–${hi} h`,short:"Tarde",...t,_day:day}); }
+  return out.length?out:one;
+}
+function sessHint(ss){
+  if(!ss.length||!ss[0].label) return "";
+  return `<div class="hint"><b>Cometa por tramo</b> · ${ss.map(s=>`${esc(s.label)}: ${s.viento} kn, rachas ${s.racha}`).join(" · ")}</div>`;
+}
+function trend(day){
+  const a=FC&&FC.anterior&&FC.anterior.dias&&FC.anterior.dias[day], c=fcWin(day,9,17); if(!a||!c) return "";
+  const r=Math.round(c.raw-a[0]);
+  if(r>=1) return `<span class="trend up">▲ +${r} kn vs. previsión anterior</span>`;
+  if(r<=-1) return `<span class="trend down">▼ −${-r} kn vs. previsión anterior</span>`;
+  return `<span class="trend eq">= sin cambios vs. previsión anterior</span>`;
+}
+// Tide tables, local time: Camocim (tide-forecast.com) for days 16-20, Pecém (tabuademares.com) for days 21-22. P = pleamar, B = bajamar
+const TIDES={"16":[["B","04:06",0.8],["P","10:26",2.4],["B","16:29",0.9],["P","22:45",2.5]],"17":[["B","05:13",0.8],["P","11:37",2.4],["B","17:46",1.0]],"18":[["P","00:02",2.5],["B","06:27",0.8],["P","12:50",2.5],["B","19:02",0.9]],"19":[["P","01:16",2.5],["B","07:34",0.8],["P","13:53",2.6],["B","20:06",0.7]],"20":[["P","02:19",2.6],["B","08:31",0.7],["P","14:46",2.7],["B","21:00",0.6]],"21":[["P","01:43",2.5],["B","07:52",0.6],["P","14:05",2.6],["B","20:18",0.5]],"22":[["P","02:29",2.6],["B","08:36",0.4],["P","14:51",2.8],["B","21:06",0.3]]};
+// Which tide suits each spot (from kite spot guides; see sources in the footer)
+const TIDE_TIP={
+  "Praia do Preá":[["Playa de Preá y Barrinha (mar abierto)","cualquiera","Con marea baja el agua queda poco profunda y más plana; con la marea subiendo entran kickers y olitas. Playa ancha de arena, sin rocas ni corrientes fuertes."]],
+  "Jericoacoara":[["Punta de Jeri y Duna do Pôr do Sol","baja","Con marea baja el agua queda más lejos del cabo: menos sombra de viento y olas más pequeñas. Con marea alta la zona de dentro se queda casi sin viento; mejor irse a sotavento, hacia la duna."]],
+  "Tatajuba":[["Laguna de Tatajuba (desembocadura, junto al pueblo)","media a alta","Al subir la marea se llena y forma una gran bahía plana donde se hace pie; a media marea es cuando está más lisa y en plena pleamar hay algo más de chop. Con marea baja la laguna se queda muy pequeña y se navega en la playa. Ojo a currales de pesca, barcas y bañistas."],["Lagoa da Torta (en las dunas, a unos 4 km)","no depende","Laguna de agua dulce entre dunas: plana a cualquier hora, con algo menos de viento que en el mar."]],
+  "Camocim":[["Ilha do Amor (frente a Camocim, al otro lado del río)","baja a media","Con marea baja el agua queda más lisa en la bahía y las lagunas; según sube aumenta el chop y en el lado de mar entran olas de 1,5–2,5 m. Ojo: con bajamar quedan rocas al descubierto entre la Ilha do Amor y Maceió."]],
+  "Barra Grande":[["Playa de Barra Grande (zona central y La Croa)","baja, o subiendo y bajando","Con marea baja se forma una gran piscina plana y poco profunda (en plena bajamar puede quedar demasiado somera). Con pleamar hay chop y olitas."],["Lagoa do Mangue (unos 2 km a sotavento)","alta","Se llena con la pleamar y queda plana detrás del banco de arena, incluso con viento fuerte."]],
+  "Taíba (laguna)":[["Lagoa da Taíba","no depende","El nivel depende de la época y de las lluvias, no de la marea. Muy poco profunda y con rocas sumergidas, sobre todo a sotavento: mantened distancia."],["Taibinha (mar, olas)","cualquiera, con ojo en la baja","Spot de olas con mucha carrera de marea; las pocas rocas que hay solo se ven con marea baja."]]
+};
+[WG,WA,TIDE_TIP].forEach(m=>{ m["Taíba"]=m["Taíba (laguna)"]; }); // the Open-Meteo version names the spot just "Taíba"
+function tideTip(name){ const t=TIDE_TIP[name]; return t?t.map(x=>`<div class="tip"><b>${esc(x[0])}</b> · marea ideal: <b>${esc(x[1])}</b>. ${esc(x[2])}</div>`).join(""):""; }
+const DAY_TIPS={
+  "17":[["la laguna de Guriú (desembocadura con manglar)","ideal de media a alta, cuando se forman espejos de agua plana. Ojo a la balsa y a las barcas en la boca del río."]],
+  "19":[["la playa de Maceió","ideal alrededor de la pleamar para saltar, con olitas manejables. Con marea baja el agua queda plana, pero hay que caminar unos 150 m hasta ella."]],
+  "20":[["Macapá (desembocadura del río Camurupim)","la marea forma piscinas y lagunas planas entre los bancos de arena. Tradicionalmente mejor con marea baja, aunque una guía reciente prefiere las horas alrededor de la pleamar en noviembre. Hay corriente en la boca del río y los bancos cambian cada año: preguntad a Iván."]]
+};
+function dayTips(day){ const x=DAY_TIPS[day]; return x?`<div class="daytips">${x.map(t=>`<span><b>Marea en ${esc(t[0])}:</b> ${esc(t[1])}</span>`).join("")}</div>`:""; }
+// Downwind guide per day (summarised from kite trip guides; see footer)
+const DW={
+  "16":{t:"Barrinha → Preá → Jeri",m:"~18 km · de 45 min a 1,5 h",
+    r:"El downwind más fácil de la semana: playa ancha de arena y el coche puede seguiros por la orilla todo el tramo. Barrinha tiene agua de plana a choppy con zonas someras; al pasar por Preá el mar está más movido, con chop y alguna ola. Parada habitual para comer en Preá.",
+    o:["Mejor salir de Barrinha con marea baja: es cuando se llega bien y cuando el agua está más plana.","Barcas de pesca fondeadas en Barrinha y cerca del pueblo de Preá.","La mayoría sale en «la Placa»: a partir de ahí la orilla es rocosa y el viento sopla de tierra.","Si seguís, se termina en Praia da Malhada o detrás de la duna. En la playa principal de Jeri está prohibido el kite."]},
+  "17":{t:"Jeri → Guriú → Tatajuba",m:"~22–25 km · de 1,5 a 3 h",
+    r:"Salida desde la duna de Jeri. Tramo de mar con chop y olitas, sobre todo antes de Guriú; después se puede entrar a la laguna de Guriú (manglar de Mangue Seco) a navegar en plano y seguir hasta la laguna de Tatajuba, donde se termina en agua plana y poco profunda.",
+    o:["Para riders con experiencia: el coche no puede seguir todo el tramo, cruza el río Guriú en balsa y hace el final por el interior.","Detrás de la duna de Jeri el viento entra racheado en la salida.","Balsa y barcas en la boca del río Guriú.","Las dos lagunas funcionan de marea media a alta; con marea baja la de Tatajuba se queda muy pequeña.","En Tatajuba hay currales de pesca, barcas y bañistas en la zona de navegación."]},
+  "18":{t:"Tatajuba → Camocim → Maceió",m:"~29–32 km",
+    r:"Etapa de mar abierto con pocos tramos de agua plana, por eso se suele aprovechar antes la laguna de Tatajuba. Parada en la Ilha do Amor, frente a Camocim; después se cruza la desembocadura del río y sigue una playa larga hasta Maceió.",
+    o:["Cruce de la boca del río en Camocim: barcos y zona de pescadores que hay que evitar.","Con marea baja quedan rocas al descubierto entre la Ilha do Amor y Maceió.","Con marea alta entran olas de 1,5–2,5 m y el mar se pone irregular.","En Maceió el viento llega racheado y con componente de tierra; el agua plana queda al norte de la playa."]},
+  "19":{t:"Maceió → Barra dos Remédios → Bitupitá",m:"~35 km (50 km si se sigue hasta Barra Grande)",
+    r:"La etapa más larga y más salvaje: tramos largos de playa desierta entre dunas. Barra dos Remédios es un pequeño delta con vegetación donde se para a comer; Bitupitá es el final de la playa, junto al Pontal das Almas, donde se juntan cinco ríos.",
+    o:["Zona remota, sin servicios ni rescate: llevad agua y no os separéis del grupo.","El 4x4 de apoyo va cerca, pero las bocas de río y el manglar pueden cortarle el paso.","En Bitupitá las olas son fuertes y un canal de marea corta el acceso por tierra al Pontal.","En Maceió, cerca de la bajamar, hay que caminar unos 150 m hasta el agua."]},
+  "20":{t:"Barra Grande → Macapá",m:"~3–4 km · vuelta de 20–30 min ciñendo",
+    r:"Downwind corto. A unos 3 km se llega al delta del río Camurupim y se gira hacia una gran laguna protegida por un banco de arena largo y estrecho, rodeada de manglar. Junto a la boca está La Boca, una zona amplia de agua plana y poco profunda.",
+    o:["Lo habitual es salir de Barra Grande con marea baja y llegar a Macapá con la marea subiendo.","Rocas (y ostras) saliendo de Barra Grande con marea baja, y muy poca agua lejos de la orilla.","Por la mañana el viento es de tierra y racheado; suele girar y asentarse hacia las 11 h.","Corriente en la boca del río y bancos de arena que cambian; arbustos a sotavento en la laguna.","Vuelta ciñendo, o en carro de burro o taxi si se acuerda antes."]}
+};
+function dwGuide(day){ const g=DW[day]; if(!g) return "";
+  return `<details class="dw"><summary>Guía del downwind<span>${esc(g.t)} · ${esc(g.m)}</span></summary><p>${esc(g.r)}</p><h4>A tener en cuenta</h4><ul>${g.o.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`; }
+function tides(day){
+  const t=TIDES[day]; if(!t) return "";
+  return `<div class="tides"><b>Mareas</b>${t.map(x=>{const h=+x[1].slice(0,2), night=h<6||h>=18;
+    return `<span class="${night?"night":""}">${x[0]==="P"?"Pleamar":"Bajamar"} ${x[1]} (${String(x[2].toFixed(1)).replace(".",",")} m)</span>`;}).join("")}<span class="night">ref. ${+day>=21?"Pecém, junto a Taíba":"Camocim"}</span></div>`;
+}
+const EXTRA={"19":[["Maceió (Camocim) en Windy.app","https://windy.app/forecast2/spot/625548/Maceio.+Camocim"]]};
+function extra(day){ const x=EXTRA[day]; return x?`<div class="src">Otros spots: ${x.map(l=>`<a href="${l[1]}" target="_blank" rel="noopener">${esc(l[0])} ↗</a>`).join(" · ")}</div>`:""; }
+function todayNum(){ // day of November 2026 in Brazil local time, or null outside the trip month
+  try{ const s=new Date().toLocaleDateString("en-CA",{timeZone:"America/Fortaleza"}); return s.slice(0,7)==="2026-11"?+s.slice(8,10):null; }catch(e){ return null; }
+}
+let scrolledToday=false;
 function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
 function fmtDate(ts){ if(!ts) return ""; const d=new Date(ts); return d.toLocaleString("es-ES",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}); }
 
@@ -299,25 +405,29 @@ function renderRiders(){
 function renderDays(){
   daysEl.textContent="";
   days.slice().sort((a,b)=>(a.orden||0)-(b.orden||0)).forEach(d=>{
-    const el=document.createElement("article"); el.className="day";
+    const TODAY=todayNum(), isT=TODAY!=null&&+d.fecha===TODAY, isP=TODAY!=null&&+d.fecha<TODAY;
+    const el=document.createElement("article"); el.className="day"+(isT?" today":isP?" past":"");
     const e=eff(d);
     const col=windColor(e.viento);
     const badge = col
       ? `<div class="windbadge" style="background:${col}"><b>${esc(e.viento)}</b><small>kn${e.rango?` (${esc(e.rango)})`:""}${e.racha?` · rachas ${esc(e.racha)}`:""}</small></div>`
       : `<div class="windbadge none"><b>Sin previsión aún</b></div>`;
+    const ss=sessions(d,e);
     const ridersSorted=riders.slice().sort((a,b)=>(a.orden||0)-(b.orden||0));
     const kites = col ? ridersSorted.map(r=>{
-      const rec=recommend(r,e); if(!rec) return "";
+      const cell=s=>{ const rec=recommend(r,s); if(!rec) return ""; const lab=s.short?`<span class="slab">${s.short}</span>`:"";
       const val = rec.size!=null ? `<span class="size">${rec.size} m<span class="ideal">${rec.note?esc(rec.note):`ideal ${rec.ideal.toFixed(1)}`}</span></span>` : `<span class="size warn">${esc(rec.warn)}</span>`;
-      return `<div class="kite"><span class="who">${avatar(r,24)}${esc(r.nombre)}</span>${val}</div>`;
+      return `<span class="scol">${lab}${val}</span>`; };
+      const vals=ss.map(cell).join(""); if(!vals) return "";
+      return `<div class="kite"><span class="who">${avatar(r,24)}${esc(r.nombre)}</span><span class="sizes">${vals}</span></div>`;
     }).join("") : "";
     el.innerHTML=`
-      <div class="side"><div class="dname">${esc(d.dia_semana||"")}</div><div class="dnum">${esc(d.fecha||"")}</div><div class="when">${esc(d.franja||"")}</div></div>
+      <div class="side"><div class="dname">${esc(d.dia_semana||"")}</div>${isT?'<span class="hoy">Hoy</span>':""}<div class="dnum">${esc(d.fecha||"")}</div><div class="when">${esc(d.franja||"")}</div></div>
       <div class="main">
         <div class="top"><div><div class="spot">${esc(d.spot||"")}</div><div class="plan">${esc(d.plan||"")}</div></div>
-          <div class="wind">${badge}${dirArrow(e.dir)}</div></div>
-        ${kites?`<div class="kites">${kites}</div>`:""}
-        ${strips(String(d.fecha))}
+          <div class="wind">${badge}${dirArrow(e.dir)}${e!==d?trend(String(d.fecha)):""}</div></div>
+        ${kites?`${sessHint(ss)}<div class="kites">${kites}</div>`:""}
+        ${strips(String(d.fecha))}${tides(String(d.fecha))}${dayTips(String(d.fecha))}${dwGuide(String(d.fecha))}${extra(String(d.fecha))}
         ${d.nota?`<div class="note">${esc(d.nota)}</div>`:""}
         <div class="src">${e.fuente?`Fuente: ${esc(e.fuente)}`:""}${e.actualizado?` · actualizado ${esc(fmtDate(e.actualizado))}`:""}</div>
       </div>`;
@@ -344,17 +454,18 @@ function renderDays(){
     }
     daysEl.appendChild(el);
   });
+  if(!scrolledToday&&!editing){ const t=daysEl.querySelector(".day.today"); if(t){ scrolledToday=true; t.scrollIntoView({block:"start"}); } }
   const last=Math.max(0,...days.map(d=>eff(d).actualizado||0));
   $("#lastupd").textContent= last? `Última actualización: ${fmtDate(last)}` : "";
 }
 function renderPack(){
   const el=$("#pack"); el.textContent="";
-  const withWind=days.map(eff).filter(d=>d.viento);
+  const withWind=days.flatMap(d=>{const e=eff(d); return e.viento?sessions(d,e):[];});
   riders.slice().sort((a,b)=>(a.orden||0)-(b.orden||0)).forEach(r=>{
-    const q=parseQuiver(r.quiver); const count={}; let short=0, big=0, nd=0;
+    const q=parseQuiver(r.quiver); const count={}, seen={}; let short=0, big=0, nd=0;
     withWind.forEach(d=>{const rec=recommend(r,d); if(!rec) return; nd++;
-      if(rec.size!=null) count[rec.size]=(count[rec.size]||0)+1;
-      else if(/Poco/.test(rec.warn||"")) short++; else if(/Mucho/.test(rec.warn||"")) big++;});
+      if(rec.size!=null){ (seen[rec.size]=seen[rec.size]||new Set()).add(d._day); count[rec.size]=seen[rec.size].size; }
+      else if(/Poco/.test(rec.warn||"")){ (seen.S=seen.S||new Set()).add(d._day); short=seen.S.size; } else if(/Mucho/.test(rec.warn||"")){ (seen.B=seen.B||new Set()).add(d._day); big=seen.B.size; }});
     const card=document.createElement("div"); card.className="packcard";
     const c=rcolor(r);
     let chips = q.length ? q.map(s=>count[s]?`<span class="chip" style="color:${c}">${s} m · ${count[s]} ${count[s]===1?"día":"días"}</span>`:`<span class="chip off">${s} m · 0</span>`).join("") : `<span class="hint">Falta el quiver</span>`;
@@ -368,16 +479,18 @@ function renderBanner(){
   const el=$("#srcbanner"); if(!el) return;
   const live=!!(window.SNAP&&window.SNAP.live);
   const WG_URL="https://claude.ai/artifact/WSafHxbWiegaFazQDgjpeR", OM_URL="https://raulvillalbavandijk.github.io/kite-brasil-2026/";
-  let src, when="";
+  let src, when="", stale="";
   if(live){
     const name=(LIVE_MODELS.find(m=>m[0]===liveModel)||[0,liveModel])[1];
     src=`Open-Meteo · ${liveModel==="best_match"?"mejor modelo disponible":"modelo "+esc(name)} · punto a ~3 km mar adentro de cada spot`;
     if(FC&&FC.actualizado) when=`Cargada a las ${new Date(FC.actualizado).toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})} (se recarga al abrir la página).`;
   } else {
     src="Windguru Pro · blend de modelos WG del spot de Windguru";
-    if(FC&&FC.actualizado) when=`Actualizada el ${esc(fmtDate(Date.parse(FC.actualizado)||FC.actualizado))}.`;
+    if(FC&&FC.actualizado){ when=`Actualizada el ${esc(fmtDate(Date.parse(FC.actualizado)||FC.actualizado))}.`;
+      const age=(Date.now()-Date.parse(FC.actualizado))/36e5;
+      if(age>24) stale=`<span class="stale">Ojo: esta previsión tiene ${Math.round(age)} h y puede estar desfasada. Mira la versión que se actualiza sola: <a href="${OM_URL}">Open-Meteo</a>, o los enlaces a Windguru de cada spot.</span>`; }
   }
-  el.innerHTML=`<b>Referencia de viento</b>
+  el.innerHTML=`<b>Referencia de viento</b>${stale}
     <span>Fuente: ${src}. ${when}</span>
     <span>El número grande de cada día es el <strong>viento medio de 9 a 17 h</strong> (nudos, a 10 m); las rachas, la máxima de ese tramo. Hora local de Brasil.</span>
     <span>${live?`Versión con Windguru Pro (la referencia principal): <a href="${WG_URL}">abrir</a>`:`Versión que se actualiza sola con Open-Meteo (plan B, sin ordenador): <a href="${OM_URL}">abrir</a>`}</span>`;
@@ -416,3 +529,5 @@ function showErr(e){
 </script>
 </body>
 </html>
+
+</body></html>
